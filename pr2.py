@@ -145,13 +145,30 @@ if __name__ == "__main__":
 		l = line.split()
 		temp = {'freq':int(l[1])}
 		frequencies[l[0]] = temp
-		
+	
+	'''
+	# print the input
+	print 'input:'
 	for f in frequencies:
 		print f, frequencies[f]['freq']
+	print ''
+	'''
 	
+	# create Huffman tree
 	huffTree = HuffTree(frequencies)
 	
+	'''
+	# print Huffman codes
 	huffTree.printMap()
+	'''
 	
+	# output Huffman codes to file
+	ofile = open('hcodes.txt', 'w')
+	ofile.write('Average: '+str(huffTree.getAvg())+'\n')
+	map = huffTree.getMap()
+	for c in map:
+		ofile.write(c+' '+map[c]['code']+'\n')
+	
+	# get string to encode
 	text = str(raw_input('type in a string to encode: '))
 	print huffTree.encodeString(text)
