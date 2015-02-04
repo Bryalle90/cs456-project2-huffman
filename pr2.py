@@ -54,31 +54,31 @@ class MinHeap:
 		item = self.__items.popleft()
 		self.__build_heap(self.__items)
 		return item
-
-	def is_empty(self):
-		return len(self.__items) == 0
 		
 	def isSizeOne(self):
 		return len(self.__items) == 1
 		
 class HuffTree(object):
 	def __init__(self, frequencies):
-		self.heap = MinHeap()
-		self.map = frequencies
+		# create min-heap and add input frequencies
+		self.__heap = MinHeap()
+		self.__map = frequencies
 		for f in frequencies:
-			self.heap.add(HuffNode(f, frequencies[f]['freq']))
+			self.__heap.add(HuffNode(f, frequencies[f]['freq']))
 			
-		while not self.heap.isSizeOne():
-			left = self.heap.remove()
-			right = self.heap.remove()
-			print 'combining two smallest nodes', left.character, left.freq, right.character, right.freq, left.freq + right.freq
+		while not self.__heap.isSizeOne():
+			# remove the two smallest frequencies and create a parent for them
+			left = self.__heap.remove()
+			right = self.__heap.remove()
+			parent = HuffNode(None, left.freq + right.freq, left, right)
 			
-			top = HuffNode(None, left.freq + right.freq, left, right)
-			self.heap.add(top)
+			# insert parent into the heap
+			self.__heap.add(parent)
 			
-		self.root = self.heap.remove()
-		arr = ''
-		self.createMap(self.root, arr)
+		# when there is only one node in the heap, remove it and set it as the root for the huffman tree
+		self.__root = self.__heap.remove()
+		code = ''
+		self.__createMap(self.__root)
 	
 	def __createMap(self, curr, code=''):
 		if(curr.left):
@@ -92,23 +92,26 @@ class HuffTree(object):
 		if not curr.left and not curr.right:
 			self.__map[curr.character]['code'] = code
 			
+	def getMap(self):
+		return self.__map
+		
 	def getAvg(self):
 		avg = 0
-		for c in self.map:
-			avg += len(self.map[c]['code']) * ( self.map[c]['freq'] / 100.0)
+		for c in self.__map:
+			avg += len(self.__map[c]['code']) * ( self.__map[c]['freq'] / 100.0)
 		return avg
 			
 	def printMap(self):
 		print 'Average:', self.getAvg()
-		for c in self.map:
-			print c, self.map[c]['code']
+		for c in self.__map:
+			print c, self.__map[c]['code']
 	
 	def encodeString(self, string):
-		output = []
+		output = ''
 		for c in string:
-			output.append(self.map[c]['code'])
+			output += self.__map[c]['code']
 		
-		return ''.join(str(i) for i in output)
+		return output
 		
 	def decode(self, string, loc=0, r=None):
 		curr = r if r else self.__root
