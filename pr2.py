@@ -2,7 +2,7 @@
 # Class: CS456 Spring 2015
 # Assignment: Project 2
 # Required Files: alphabet.txt
-# To Run: navigate to folder containing pr2.py in console/terminal and enter: python pr1.py
+# To Run: navigate to folder containing pr2.py in console/terminal and enter: python pr2.py
 
 import os, sys, math, collections
 
