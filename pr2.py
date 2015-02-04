@@ -4,7 +4,7 @@
 # Required Files: alphabet.txt
 # To Run: navigate to folder containing pr2.py in console/terminal and enter: python pr1.py
 
-import os, sys, math, collections, string
+import os, sys, math, collections
 
 class HuffNode(object):
 	def __init__(self, c, f, l=None, r=None):
