@@ -110,10 +110,26 @@ class HuffTree(object):
 		
 		return ''.join(str(i) for i in output)
 		
-	def decode(self, string):
-		pass
-	
-	
+	def decode(self, string, loc=0, r=None):
+		curr = r if r else self.__root
+		out = curr.character
+		if loc < len(string):
+			# if current bit is a 0 and there is a child to the left
+			if curr.left and string[loc] == '0':
+				out = self.decode(string, loc + 1, curr.left)
+				
+			# if current bit is a 1 and there is a child to the right
+			elif curr.right and string[loc] == '1':
+				out = self.decode(string, loc + 1, curr.right)
+				
+			# if current node is a leaf
+			if not curr.left and not curr.right:
+				d = self.decode(string, loc)
+				if d:
+					out += d
+				else:
+					out = d
+		return out
 		
 if __name__ == "__main__":
 	root = os.path.dirname(os.path.realpath(sys.argv[0]))
