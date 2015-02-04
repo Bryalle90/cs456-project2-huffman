@@ -77,20 +77,20 @@ class HuffTree(object):
 			self.heap.add(top)
 			
 		self.root = self.heap.remove()
-		arr = []
+		arr = ''
 		self.createMap(self.root, arr)
 	
 	def createMap(self, root, arr):
 		if(root.left):
-			newarr = list(arr)
-			newarr.append(0)
+			newarr = arr
+			newarr += '0'
 			self.createMap(root.left, newarr)
 		if(root.right):
-			newarr = list(arr)
-			newarr.append(1)
+			newarr = arr
+			newarr += '1'
 			self.createMap(root.right, newarr)
 		if not root.left and not root.right:
-			self.map[root.character]['code'] = ''.join(str(i) for i in arr)
+			self.map[root.character]['code'] = arr
 			
 	def getAvg(self):
 		avg = 0
@@ -111,7 +111,7 @@ class HuffTree(object):
 		return ''.join(str(i) for i in output)
 		
 	def decode(self, string):
-		
+		pass
 	
 	
 		
