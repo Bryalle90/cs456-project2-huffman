@@ -80,17 +80,17 @@ class HuffTree(object):
 		arr = ''
 		self.createMap(self.root, arr)
 	
-	def createMap(self, root, arr):
-		if(root.left):
-			newarr = arr
-			newarr += '0'
-			self.createMap(root.left, newarr)
-		if(root.right):
-			newarr = arr
-			newarr += '1'
-			self.createMap(root.right, newarr)
-		if not root.left and not root.right:
-			self.map[root.character]['code'] = arr
+	def __createMap(self, curr, code=''):
+		if(curr.left):
+			newcode = code
+			newcode += '0'
+			self.__createMap(curr.left, newcode)
+		if(curr.right):
+			newcode = code
+			newcode += '1'
+			self.__createMap(curr.right, newcode)
+		if not curr.left and not curr.right:
+			self.__map[curr.character]['code'] = code
 			
 	def getAvg(self):
 		avg = 0
