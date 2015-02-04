@@ -172,3 +172,12 @@ if __name__ == "__main__":
 	# get string to encode
 	text = str(raw_input('type in a string to encode: '))
 	print huffTree.encodeString(text)
+	print ''
+	
+	# get string to decode
+	text = str(raw_input('type in a string to decode: '))
+	output = huffTree.decode(text)
+	if output:
+		print output
+	else:
+		print text, 'is not decodable'
